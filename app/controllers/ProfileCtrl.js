@@ -33,7 +33,7 @@ angular.module('MyGrades').controller('ProfileCtrl', [
 
 
             $http({
-            url: `http://localhost:8000/student-courses/`,
+            url: `http://localhost:8000/student-course/`,
             headers: {
                 "Content-Type": "application/json",
                 'Authorization': "Token " + RootFactory.getToken()
