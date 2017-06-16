@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MyGrades</title>
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">      
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>           
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
+</head>
+<body ng-app='MyGrades'>
+
+<div ng-include="'partials/navbar.html'"></div>
+
+<div ng-view></div>
+
+<!-- Dependencies -->
+<script type="text/javascript" src="lib/node_modules/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript" src="lib/node_modules/angular/angular.min.js"></script>
+<script type="text/javascript" src="lib/node_modules/angular-route/angular-route.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
+
+<!-- App -->
+<script type="text/javascript" src="app/app.js"></script>
+<!-- Factories -->
+<script type="text/javascript" src="app/factories/RootFactory.js"></script>
+<!-- Controllers -->
+<script type="text/javascript" src="app/controllers/AuthCtrl.js"></script>
+<script type="text/javascript" src="app/controllers/ProfileCtrl.js"></script>
+<script type="text/javascript" src="app/controllers/CourseCtrl.js"></script>
+</body>
+</html>
