@@ -15,27 +15,24 @@ angular.module('MyGrades').controller('CourseCtrl', [
 
         console.log("Course: ", $scope.course);
 
-        //  RootFactory.getApiRoot()
-        // .then( (root) => {
-        //     console.log("Root: ", root);
-        //     $http({
-        //         url: `http://localhost:8000/student/detail/${$scope.current_user.username}/`,
-        //         headers: {
-        //             "Content-Type": "application/json",
-        //             'Authorization': "Token " + RootFactory.getToken()
-        //         },
-        //         params:{
-        //             'username': $scope.current_user.username
-        //     }
-        //     }).then( function(res) {
-        //         console.log("Response: ", res);
-        //         $scope.student = res.data.results[0];
-
-
+        RootFactory.getApiRoot()
+        .then( (root) => {
+            console.log("Root: ", root);
             
-        //     });
 
-        // });
+            $http({
+            url: `http://localhost:8000/student-course-assignments/`,
+            headers: {
+                "Content-Type": "application/json",
+                'Authorization': "Token " + RootFactory.getToken()
+            },
+            params:{
+                'course_id': parseFloat($scope.course.id)
+            }
+            }).then( function(res) {
+                console.log("Assignment Response: ", res.data);
+                $scope.assignments = res.data.results;
+            });
+        });
        
-
 }]);
