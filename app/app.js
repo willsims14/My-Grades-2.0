@@ -21,6 +21,10 @@ angular.module('MyGrades').config(
             controller: 'ProfileCtrl',
             templateUrl: '/partials/profile.html'
         })
+        .when('/course/:course_id/:course_title/create-assignment/', {
+            controller: 'CreateAssignmentCtrl',
+            templateUrl: '/partials/create_assignment.html'
+        })
         .when('/course/:course_id/:course_title',{
             controller: 'CourseCtrl',
             templateUrl: '/partials/course_detail.html'
