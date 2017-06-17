@@ -19,7 +19,9 @@ angular.module('MyGrades').controller('AuthCtrl', [
             method: "POST",
             data: {
                 "username": $scope.new_user.username,
-                "password": $scope.new_user.password
+                "password": $scope.new_user.password,
+                "first_name": $scope.new_user.first_name,
+                "last_name": $scope.new_user.last_name
             },
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
