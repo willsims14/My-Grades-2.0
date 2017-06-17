@@ -12,6 +12,8 @@ angular.module('MyGrades').controller('ProfileCtrl', [
 
         $scope.current_user = $routeParams;
 
+        console.log("CurrentUserID: ", $scope.current_user);
+
 
         RootFactory.getApiRoot()
         .then( (root) => {

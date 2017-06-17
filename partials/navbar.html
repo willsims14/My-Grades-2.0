@@ -1,9 +1,10 @@
-  <nav>
+  <nav ng-controller="AuthCtrl">
     <div class="nav-wrapper teal">
     <!-- <div class="navbar-fixed"> -->
     <a href="#!/course/create" class="left hide-on-med-and-down" >Create Course</a>
       <a href="#" class="brand-logo center">MyGrades</a>
       <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li ng-click="getUserProfile()"><a>Profile</a></li>
         <li><a href="">Logout</a></li>
         <li><a href=""><i class="material-icons">view_module</i></a></li>
       </ul>
