@@ -19,7 +19,7 @@ angular.module('MyGrades').controller('CourseCtrl', [
         .then( (root) => {
             console.log("Root: ", root);
             
-
+            // Get assignments for current course
             $http({
             url: `http://localhost:8000/student-course-assignments/`,
             headers: {
@@ -34,5 +34,32 @@ angular.module('MyGrades').controller('CourseCtrl', [
                 $scope.assignments = res.data.results;
             });
         });
-       
+
+
+        $scope.deleteCourse = function(course_id) {
+            RootFactory.getApiRoot()
+            .then( (root) => {
+                $http({
+                    url: `http://localhost:8000/student-course-delete/${course_id}/`,
+                    method: 'DELETE',
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": "Token " + RootFactory.getToken()
+                    }
+                }).then( function(response) {
+                    console.log("DELETE Response: ", response);
+                    if (response.status === 204){
+                        console.log("SUCCESS DELETE");
+                    }else{
+                        console.log("ERROR DELETE");
+                    }
+                });
+
+            });
+        };
+
+
+
+
+
 }]);

@@ -2,6 +2,6 @@
 
 <h3>(( student.first_name )) (( student.last_name ))</h3>
 
-<ul ng-repeat='course in student.courses'>
-    <li><a href="#!/course/((course.id))/((course.course))">((course.course))</a></li>
+<ul class="collection" ng-repeat='course in student.courses'>
+    <li class="collection-item"><a href="#!/course/((course.id))/((course.course))">((course.course))</a></li>
 </ul>

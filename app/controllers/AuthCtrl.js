@@ -31,7 +31,7 @@ angular.module('MyGrades').controller('AuthCtrl', [
                 console.log("Data: ", res);
                 if(res.data.token !== ""){
                     // $cookie.write
-                    $location.path(`/profile/${$scope.user.username}`);
+                    $location.path(`/profile/${$scope.new_user.username}`);
                 }
             },
             console.error
