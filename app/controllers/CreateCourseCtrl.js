@@ -9,7 +9,7 @@ angular.module('MyGrades').controller('CreateCourseCtrl', [
     '$routeParams',
     function($scope, $http, $location, RootFactory, apiUrl, $routeParams) {
 
-        $scope.course = {}
+        $scope.course = {};
 
 
 
@@ -76,5 +76,5 @@ angular.module('MyGrades').controller('CreateCourseCtrl', [
 
 
 
-        }
+        };
 }]);
