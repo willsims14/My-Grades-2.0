@@ -4,5 +4,5 @@
     <li class="collection-item">(( assignment.title )) <i>(( assignment.points_received )) / (( assignment.points_possible ))</i></li>
 </ul>
 
-<a class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">add</i></a>
+<a class="btn-floating btn-large waves-effect waves-light red" ng-href="#!/course/(( course.id ))/(( course.title ))/create-assignment/"><i class="material-icons">add</i></a>
 <a class="waves-effect waves-light btn" ng-click="deleteCourse(course.id)"><i class="material-icons dp48">delete</i></a>
