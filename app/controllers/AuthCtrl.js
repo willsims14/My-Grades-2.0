@@ -66,6 +66,7 @@ angular.module('MyGrades').controller('AuthCtrl', [
         $scope.login();
     };
 
+
 }]);
 
 

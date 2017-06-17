@@ -9,9 +9,9 @@ angular.module('MyGrades').controller('CourseCtrl', [
     '$routeParams',
     function($scope, $http, $location, RootFactory, apiUrl, $routeParams) {
 
-        $scope.course = {}
+        $scope.course = {};
         $scope.course.title = $routeParams.course_title;
-        $scope.course.id = $routeParams.course_id
+        $scope.course.id = $routeParams.course_id;
 
         console.log("Course: ", $scope.course);
 
