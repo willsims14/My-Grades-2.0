@@ -1,5 +1,7 @@
 "use strict";
 
+
+
 app.factory("StudentFactory", function(apiUrl, RootFactory, $q, $http){
 
 
@@ -14,6 +16,7 @@ app.factory("StudentFactory", function(apiUrl, RootFactory, $q, $http){
             })
             .then((res) => {
                 resolve(res);
+
             }).catch((error) => {
                 reject(error);
             });
@@ -21,7 +24,29 @@ app.factory("StudentFactory", function(apiUrl, RootFactory, $q, $http){
     };
 
 
+    let getStudentCourses = function(student){
+        return $q((resolve, reject) => {
 
-    return { getStudent };
+            $http({
+                url: `http://localhost:8000/student-course/`,
+                headers: {
+                    "Content-Type": "application/json",
+                    'Authorization': "Token " + RootFactory.getToken()
+                },
+                params:{
+                    'student_id': parseFloat(student.id)
+                }
+            })
+            .then( (res) => {
+                resolve(res);
+            }).catch( (error) => {
+                reject(error);
+            });
+        });
+    };
+
+
+
+    return { getStudent, getStudentCourses };
 
 });
