@@ -1,0 +1,43 @@
+"use strict";
+
+app.factory("AuthFactory", function(apiUrl, RootFactory, $q, $http){
+
+
+    let registerUser = function(new_user){
+
+        return $q((resolve, reject) => {
+            
+            $http({
+                url: `${apiUrl}/register`,
+                method: "POST",
+                data: {
+                    "username": new_user.username,
+                    "password": new_user.password,
+                    "first_name": new_user.first_name,
+                    "last_name": new_user.last_name
+                },
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+                    'Authorization': "Token " + RootFactory.getToken()
+                }
+            })
+            .then((res) => {
+                RootFactory.setToken(res.data.token);
+                if (res.data.token !== ""){
+                    resolve(res);
+                }else{
+                    reject(res);
+                }
+            }).catch((error) => {
+                reject(error);
+            });
+        });
+
+
+    };
+
+
+
+    return {registerUser};
+
+});

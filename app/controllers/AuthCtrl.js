@@ -8,33 +8,18 @@ angular.module('MyGrades').controller('AuthCtrl', [
     '$location',
     'RootFactory',
     'apiUrl',
-    function($scope, $http, $location, RootFactory, apiUrl) {
+    'AuthFactory',
+    function($scope, $http, $location, RootFactory, apiUrl, AuthFactory) {
 
-        $scope.register = function() {
-            $http({
-                url: `${apiUrl}/register`,
-                method: "POST",
-                data: {
-                    "username": $scope.new_user.username,
-                    "password": $scope.new_user.password,
-                    "first_name": $scope.new_user.first_name,
-                    "last_name": $scope.new_user.last_name
-                },
-                headers: {
-                    "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
-                    'Authorization': "Token " + RootFactory.getToken()
-                }
-            }).then(
-                res => {
-                    RootFactory.setToken(res.data.token);
-                    console.log("Data: ", res);
-                    if(res.data.token !== ""){
-                        $location.path(`/profile/${$scope.new_user.username}`);
-                    }
-                },
-                console.error
-            );
+        $scope.register = function(){
+            AuthFactory.registerUser($scope.new_user)
+            .then( function(response) {
+                if(response.data.token !== ""){
+                    $location.path(`/profile/${$scope.new_user.username}`);
+                }else{ console.log("TOKEN INVALID"); }
+            });
         };
+
 
         $scope.login = function() {
             $http({
@@ -49,9 +34,12 @@ angular.module('MyGrades').controller('AuthCtrl', [
                     console.log("RESPONSE: ", res);
                     RootFactory.setToken(res.data.token);
                     if (res.data.token !== "") {
-                        $location.path(`/profile/${$scope.user.username}`);
+                        console.log("TOKEN GOOD");
                         GLOBAL_USER = $scope.user;
+                        $location.path(`/profile/${$scope.user.username}`);
 
+                    }else{
+                        console.log("TOKEN BAD");
                     }
                 },
             console.error
