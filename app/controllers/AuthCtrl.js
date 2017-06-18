@@ -20,41 +20,22 @@ angular.module('MyGrades').controller('AuthCtrl', [
             });
         };
 
-
-        $scope.login = function() {
-            $http({
-                url: `${apiUrl}/api-token-auth/`,
-                method: "POST",
-                data: {
-                    "username": $scope.user.username,
-                    "password": $scope.user.password
-                },
-            }).then(
-                res => {
-                    console.log("RESPONSE: ", res);
-                    RootFactory.setToken(res.data.token);
-                    if (res.data.token !== "") {
-                        console.log("TOKEN GOOD");
-                        GLOBAL_USER = $scope.user;
-                        $location.path(`/profile/${$scope.user.username}`);
-
-                    }else{
-                        console.log("TOKEN BAD");
-                    }
-                },
-            console.error
-            );
+        $scope.login = function(){
+            AuthFactory.loginUser($scope.user)
+            .then( function(res) {
+                if(res.data.token !== ""){
+                    GLOBAL_USER = $scope.user;
+                    $location.path(`/profile/${$scope.user.username}`);
+                }else{ console.log("INVALID TOKEN"); }
+            });
         };
 
         $scope.quick_login = function(){
-            $scope.user = {
-                username: "will",
-                password: "sims"
-            };
+            $scope.user = { username: "will", password: "sims" };
             $scope.login();
         };
 
-        $scope.getUserProfile = function(){
+        $scope.goToUserProfile = function(){
             $location.path(`/profile/${GLOBAL_USER.username}`);
         };
 

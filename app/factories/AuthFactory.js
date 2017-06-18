@@ -4,9 +4,7 @@ app.factory("AuthFactory", function(apiUrl, RootFactory, $q, $http){
 
 
     let registerUser = function(new_user){
-
         return $q((resolve, reject) => {
-            
             $http({
                 url: `${apiUrl}/register`,
                 method: "POST",
@@ -32,12 +30,27 @@ app.factory("AuthFactory", function(apiUrl, RootFactory, $q, $http){
                 reject(error);
             });
         });
+    };
 
-
+    let loginUser = function(user){
+        return $q((resolve, reject) => {
+            $http({
+                url: `${apiUrl}/api-token-auth/`,
+                method: "POST",
+                data: {
+                    "username": user.username,
+                    "password": user.password
+                }
+            }).then( function(res) {
+                RootFactory.setToken(res.data.token);
+                resolve(res);
+            }).catch( function(error){
+                reject(error);
+            });
+        });
     };
 
 
-
-    return {registerUser};
+    return {registerUser, loginUser};
 
 });
