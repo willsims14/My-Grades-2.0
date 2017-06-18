@@ -7,58 +7,29 @@ angular.module('MyGrades').controller('CourseCtrl', [
     'RootFactory',
     'apiUrl',
     '$routeParams',
-    function($scope, $http, $location, RootFactory, apiUrl, $routeParams) {
+    'CourseFactory',
+    function($scope, $http, $location, RootFactory, apiUrl, $routeParams, CourseFactory) {
 
         $scope.course = {};
         $scope.course.title = $routeParams.course_title;
         $scope.course.id = $routeParams.course_id;
 
-        console.log("Course: ", $scope.course);
-
-        RootFactory.getApiRoot()
-        .then( (root) => {
-            console.log("Root: ", root);
-            
-            // Get assignments for current course
-            $http({
-            url: `http://localhost:8000/student-course-assignments/`,
-            headers: {
-                "Content-Type": "application/json",
-                'Authorization': "Token " + RootFactory.getToken()
-            },
-            params:{
-                'course_id': parseFloat($scope.course.id)
-            }
-            }).then( function(res) {
-                console.log("Assignment Response: ", res.data);
-                $scope.assignments = res.data.results;
-            });
+        CourseFactory.getCourse($scope.course.id)
+        .then( function(res) {
+            $scope.assignments = res.data.results;
         });
 
 
-        $scope.deleteCourse = function(course_id) {
-            RootFactory.getApiRoot()
-            .then( (root) => {
-                $http({
-                    url: `http://localhost:8000/student-course-delete/${course_id}/`,
-                    method: 'DELETE',
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Authorization": "Token " + RootFactory.getToken()
-                    }
-                }).then( function(response) {
-                    console.log("DELETE Response: ", response);
-                    if (response.status === 204){
-                        console.log("SUCCESS DELETE");
-                    }else{
-                        console.log("ERROR DELETE");
-                    }
-                });
 
+
+        $scope.deleteCourse = function(course_id) {
+            CourseFactory.deleteCourse(course_id)
+            .then( function(res) {
+                if(res.status === 204){
+                    console.log("Delete Succesful");
+                }else{ console.log("Delete Unsuccesful"); }
             });
         };
-
-
 
 
 

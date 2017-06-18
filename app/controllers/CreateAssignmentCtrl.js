@@ -10,7 +10,7 @@ angular.module('MyGrades').controller('CreateAssignmentCtrl', [
     function($scope, $http, $location, RootFactory, apiUrl, $routeParams) {
 
         $scope.assignment = {};
-        $scope.course = $routeParams.course_title
+        $scope.course = $routeParams.course_title;
 
         console.log("CREATE ASSIGNMENT CTRL");
        
