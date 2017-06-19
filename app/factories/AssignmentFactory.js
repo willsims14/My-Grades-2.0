@@ -1,40 +1,41 @@
 "use strict";
 
 
-
 app.factory("AssignmentFactory", function(apiUrl, RootFactory, $q, $http){
 
 
 
 
-    let createAssignment = function(course){
-        // return $q((resolve, reject) => {
-        //     RootFactory.getApiRoot()
-        //     .then( (root) => {
-        //         console.log("Root: ", root);
+    let createAssignment = function(assignment){
+        return $q((resolve, reject) => {
+            RootFactory.getApiRoot()
+            .then( (root) => {
+                console.log("Root: ", root);
 
-        //         $http({
-        //             url: `${apiUrl}/create-course/`,
-        //             method: "POST",
-        //             data: { 
-        //                 "title": course.title,
-        //                 "course_number": course.course_number,
-        //                 "professor": course.professor,
-        //             },
-        //             headers: {
-        //                 "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
-        //                 'Authorization': "Token " + RootFactory.getToken()
-        //             }
-        //         }).then( function(res){
-        //             resolve(res);
-        //         }).catch( function(error){
-        //             reject(error);
-        //         });
-        //     });
-        // });
+                $http({
+                    url: `${apiUrl}/create-assignment/${assignment.course}/`,
+                    method: "POST",
+                    data: { 
+                        "title": assignment.title,
+                        "course": assignment.course,
+                        "points_possible": assignment.points_possible,
+                        "points_received": assignment.points_received,
+                        "description": assignment.description 
+                    },
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+                        'Authorization': "Token " + RootFactory.getToken()
+                    }
+                }).then( function(res){
+                    resolve(res);
+                }).catch( function(error){
+                    reject(error);
+                });
+            });
+        });
     };
 
-    let deleteAssignment = function(course_id){
+    let deleteAssignment = function(assignment_id){
 /*        return $q((resolve, reject) => {
             RootFactory.getApiRoot()
             .then( (root) => {
