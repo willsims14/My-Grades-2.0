@@ -36,11 +36,11 @@ app.factory("AssignmentFactory", function(apiUrl, RootFactory, $q, $http){
     };
 
     let deleteAssignment = function(assignment_id){
-/*        return $q((resolve, reject) => {
+        return $q((resolve, reject) => {
             RootFactory.getApiRoot()
             .then( (root) => {
                 $http({
-                    url: `http://localhost:8000/student-course-delete/${course_id}/`,
+                    url: `http://localhost:8000/student-assignment-delete/${assignment_id}/`,
                     method: 'DELETE',
                     headers: {
                         "Content-Type": "application/json",
@@ -55,7 +55,7 @@ app.factory("AssignmentFactory", function(apiUrl, RootFactory, $q, $http){
                 });
 
             });
-        });*/
+        });
     };
 
 
