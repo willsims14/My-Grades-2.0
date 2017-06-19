@@ -41,6 +41,7 @@ app.factory("CourseFactory", function(apiUrl, RootFactory, $q, $http){
                         "title": course.title,
                         "course_number": course.course_number,
                         "professor": course.professor,
+                        "semester": course.semester
                     },
                     headers: {
                         "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
@@ -78,8 +79,24 @@ app.factory("CourseFactory", function(apiUrl, RootFactory, $q, $http){
         });
     };
 
+    let getSemesters = function(){
+        return $q((resolve, reject) => {
+            $http({
+                    url: `http://localhost:8000/semesters/`,
+                    headers: {
+                        "Content-Type": "application/json",
+                        'Authorization': "Token " + RootFactory.getToken()
+                    }
+                }).then( function(response) {
+                    resolve(response);
+                }).catch( function(error) {
+                    reject(error);
+                });
+        });
+    };
 
 
-    return { getCourse, deleteCourse, createCourse };
+
+    return { getCourse, deleteCourse, createCourse, getSemesters };
 
 });

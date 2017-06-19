@@ -11,21 +11,55 @@ angular.module('MyGrades').controller('CreateCourseCtrl', [
     'StudentFactory',
     function($scope, $http, $location, RootFactory, apiUrl, $routeParams, CourseFactory, StudentFactory) {
 
+        $( document ).ready( function(){
+            $('.dropdown-button').dropdown({
+                inDuration: 300,
+                outDuration: 225,
+                constrainWidth: false, // Does not change width of dropdown to that of the activator
+                hover: true, // Activate on hover
+                gutter: 5, // Spacing from edge
+                belowOrigin: false, // Displays dropdown below the button
+                alignment: 'left', // Displays dropdown with edge aligned to the left of button
+                stopPropagation: false // Stops event propagation
+            });
+        });
+
         $scope.course = {};
+
+
+        CourseFactory.getSemesters()
+        .then( function(response) {
+            $scope.semesters = response.data.results;
+            console.log("Semesters: ", $scope.semesters);
+
+        });
+
+      
+
 
        
         $scope.create_course = function(event){
+            console.log("Course Before Assignemnt Submit: ", $scope.course);
+            $scope.course.semester = $scope.selected_semester;
+            console.log("Course After Assignment Submit: ", $scope.course);
+
             CourseFactory.createCourse($scope.course)
             .then( function(response) {
                 if (response.status === 200){
                     StudentFactory.getStudent()
                     .then( function(response) {
                         if (response.status === 200){
-                            $location.path(`/profile/${response.data.username}`)
+                            $location.path(`/profile/${response.data.username}`);
                         }
                     });
                 }
             });
+        };
+
+        $scope.setSemester = function(semester_id){
+            $scope.selected_semester = parseInt(semester_id);
+            console.log("Course After Drop: ", $scope.course);
+            $('.dropdown-button').dropdown('close');
         };
 
 

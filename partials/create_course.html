@@ -1,11 +1,28 @@
 <h1>Create a Course</h1>
 
-<form>
 <input type="text" placeholder="title" ng-model="course.title">
 <input type="text" placeholder="course #" ng-model="course.course_number">
 <input type="text" placeholder="professor" ng-model="course.professor">
-<!-- <input type="submit" class="waves-effect waves-light btn" ng-click="create_course()"> -->
+
+
+
+
+ <a class='dropdown-button btn' data-beloworigin="true"  data-activates='dropdown5'>Drop Me!</a>
+  <ul id='dropdown5' class='dropdown-content'>
+    <li ng-repeat="semester in semesters" style="text-align: center" value="(( semester.id ))" ng-click="setSemester(semester.id)"><a>(( semester.season )) (( semester.year ))</a></li>
+  </ul>
+
+
+<!-- 
+<select>
+<option>asfasdasdasads</option>
+<option>asdsdadsad1212313</option>
+</select> -->
+
+
 <button class="btn waves-effect waves-light" type="submit" ng-click="create_course()">Submit
     <i class="material-icons right">send</i>
-  </button>
-</form>
+</button>
+
+
+
