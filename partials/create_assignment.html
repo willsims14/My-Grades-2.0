@@ -1,3 +1,17 @@
 <h3>Create Assignment</h3>
 <h3>For (( course ))</h3>
-<h5>Just setup, not finished or worked on logic</h5>
+
+
+
+<div>
+    Assignment Title<input type="text" placeholder="Title" ng-model="assignment.title"><br>
+    Description<input type="text" placeholder="Very hard assignment" ng-model="assignment.description"><br>
+    Points Possible<input type="number" placeholder="100" ng-model="assignment.points_possible"><br>
+    Points Recieved<input type="number" placeholder="Optional" ng-model="assignment.points_received"><br>
+    <button class="btn waves-effect waves-light" type="submit" ng-click="create_assignment()">Submit
+        <i class="material-icons right">send</i>
+    </button>
+
+</div>
+
+

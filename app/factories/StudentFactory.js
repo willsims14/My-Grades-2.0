@@ -1,6 +1,6 @@
 "use strict";
 
-
+// var GLOBAL_USER = {};
 
 app.factory("StudentFactory", function(apiUrl, RootFactory, $q, $http){
 

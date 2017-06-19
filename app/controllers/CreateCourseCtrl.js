@@ -8,7 +8,8 @@ angular.module('MyGrades').controller('CreateCourseCtrl', [
     'apiUrl',
     '$routeParams',
     'CourseFactory',
-    function($scope, $http, $location, RootFactory, apiUrl, $routeParams, CourseFactory) {
+    'StudentFactory',
+    function($scope, $http, $location, RootFactory, apiUrl, $routeParams, CourseFactory, StudentFactory) {
 
         $scope.course = {};
 
@@ -16,7 +17,14 @@ angular.module('MyGrades').controller('CreateCourseCtrl', [
         $scope.create_course = function(event){
             CourseFactory.createCourse($scope.course)
             .then( function(response) {
-                console.log("Create Course Response: ", response);
+                if (response.status === 200){
+                    StudentFactory.getStudent()
+                    .then( function(response) {
+                        if (response.status === 200){
+                            $location.path(`/profile/${response.data.username}`)
+                        }
+                    });
+                }
             });
         };
 

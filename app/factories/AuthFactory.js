@@ -1,5 +1,6 @@
 "use strict";
 
+
 app.factory("AuthFactory", function(apiUrl, RootFactory, $q, $http){
 
 
