@@ -1,7 +1,7 @@
 <h1>(( course.title )) Detail</h1>
 
 <ul class="collection" ng-repeat="assignment in assignments">
-    <li class="collection-item">(( assignment.title )) <i>(( assignment.points_received )) / (( assignment.points_possible ))</i></li>
+    <li class="collection-item">(( assignment.title )) <i>(( assignment.points_received )) / (( assignment.points_possible ))</i><a class="waves-effect waves-light btn" ng-click="deleteAssignment(assignment.id)">Delete</a></li>
 </ul>
 
 <a class="btn-floating btn-large waves-effect waves-light red" ng-href="#!/course/(( course.id ))/(( course.title ))/create-assignment/"><i class="material-icons">add</i></a>
