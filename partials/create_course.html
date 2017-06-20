@@ -1,17 +1,39 @@
 <h1>Create a Course</h1>
 
-<input type="text" placeholder="title" ng-model="course.title">
-<input type="text" placeholder="course #" ng-model="course.course_number">
-<input type="text" placeholder="professor" ng-model="course.professor">
+<div class="row">
+<form class="col s6">
+
+    <div >
+        <input id="course_title" type="text" placeholder="Math" ng-model="course.title" class="validate">
+        <label for="first_name">Title</label>
+    </div>
+
+    <div>
+        <input id="course_description" type="text" placeholder="Standard math class with weekly homework . . ." ng-model="course.description" class="validate">
+        <label for="course_description">Description</label>
+    </div>
+
+    <div>
+        <input id="course_number" type="text" placeholder="MATH 123" ng-model="course.course_number" class="validate">
+        <label for="course_number">Course Number</label>
+    </div>
+
+    <div>
+        <input id="professor" type="text" placeholder="Dr. Hollander" ng-model="course.professor" class="validate">
+        <label for="professor">Professor</label>
+    </div>
+</form>
+</div>
 
 
 
 
+<div class="row">
  <a class='dropdown-button btn' data-beloworigin="true"  data-activates='dropdown5'>Drop Me!</a>
   <ul id='dropdown5' class='dropdown-content'>
     <li ng-repeat="semester in semesters" style="text-align: center" value="(( semester.id ))" ng-click="setSemester(semester.id)"><a>(( semester.season )) (( semester.year ))</a></li>
   </ul>
-
+</div>
 
 <!-- 
 <select>

@@ -12,6 +12,17 @@ angular.module('MyGrades').controller('ProfileCtrl', [
     function($scope, $http, $location, RootFactory, apiUrl, $routeParams, StudentFactory, CourseFactory) {
 
         $( document ).ready( function(){
+            $('.collapsible').collapsible({
+                accordion: true, // A setting that changes the collapsible behavior to expandable instead of the default accordion style
+                onOpen: function(el) { 
+                    console.log("OPENED");
+                    alert('Open'); 
+                },
+                onClose: function(el) { 
+                    console.log("CLOSED");
+                    alert('Closed'); 
+                } 
+              });
             $('.dropdown-button').dropdown({
                 inDuration: 300,
                 outDuration: 225,
@@ -23,6 +34,8 @@ angular.module('MyGrades').controller('ProfileCtrl', [
                 stopPropagation: false // Stops event propagation
             });
         });
+
+
 
         $scope.current_user = $routeParams;
 
@@ -40,6 +53,13 @@ angular.module('MyGrades').controller('ProfileCtrl', [
                 CourseFactory.getSemesters()
                 .then( function(response) {
                     $scope.semesters = response.data.results;
+
+                    CourseFactory.getCourseGrades()
+                    .then( function(response3) {
+                        $scope.coursesWithGrades = response3.data.results;
+                        console.log("Response3: ", response3);
+                    });
+
                 });
             });
         });
@@ -50,6 +70,19 @@ angular.module('MyGrades').controller('ProfileCtrl', [
             console.log("$scope.semester: ", $scope.semester_filter);
 
         };
+
+        $scope.getCourseGrades = function(course_id){
+
+
+            console.log("Courses With Grades: ", $scope.coursesWithGrades);
+            console.log("Course to Calculate: ", course_id);
+            return "HELLO WORLD!";
+
+
+
+        };
+
+
 
 
 
