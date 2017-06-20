@@ -2,6 +2,12 @@
 
 <h3>(( student.first_name )) (( student.last_name ))</h3>
 
-<ul class="collection" ng-repeat='course in student.courses'>
+ <a class='dropdown-button btn' data-beloworigin="true"  data-activates='dropdown6'>Drop Me!</a>
+  <ul id='dropdown6' class='dropdown-content'>
+    <li ng-repeat="semester in semesters" style="text-align: center" value="(( semester.id ))" ng-click="setSemesterFilter(semester.id)"><a>(( semester.season )) (( semester.year ))</a></li>
+  </ul>
+
+<ul class="collection" ng-repeat='course in student.courses | filter: { semester: semester_filter }'>
+
     <li class="collection-item"><a href="#!/course/((course.id))/((course.course))">((course.course))</a></li>
 </ul>
