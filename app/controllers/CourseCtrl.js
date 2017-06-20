@@ -11,6 +11,8 @@ angular.module('MyGrades').controller('CourseCtrl', [
     'AssignmentFactory',
     function($scope, $http, $location, RootFactory, apiUrl, $routeParams, CourseFactory, AssignmentFactory) {
 
+        $('.change-grade-inputs').hide();
+
         $(document).ready(function(){
             $('.tooltipped').tooltip({delay: 50});
             $('.tooltipped').tooltip({position: 'top'});
@@ -18,7 +20,7 @@ angular.module('MyGrades').controller('CourseCtrl', [
 
         });
 
-
+        $scope.changingGrade = false;
         $scope.course = {};
         $scope.course.title = $routeParams.course_title;
         $scope.course.id = $routeParams.course_id;
@@ -26,6 +28,24 @@ angular.module('MyGrades').controller('CourseCtrl', [
         CourseFactory.getCourse($scope.course.id)
         .then( function(res) {
             $scope.assignments = res.data.results;
+            console.log("Assignments: ", $scope.assignments);
+            var totalPointsReceived = 0.0;
+            var totalPointsPossible = 0.0;
+            var allTotalPointsPossible = 0.0;
+            for(var i = 0; i < $scope.assignments.length; i++){
+                if ($scope.assignments[i].points_received !== null){
+                    totalPointsReceived += parseFloat($scope.assignments[i].points_received);
+                    totalPointsPossible += parseFloat($scope.assignments[i].points_possible);
+                }
+                allTotalPointsPossible += parseFloat($scope.assignments[i].points_possible);
+            }
+
+            $scope.totalPointsPossible = totalPointsPossible;
+            $scope.totalPointsReceived = totalPointsReceived;
+            $scope.allTotalPointsPossible = allTotalPointsPossible;
+
+
+
         });
 
 
@@ -50,6 +70,30 @@ angular.module('MyGrades').controller('CourseCtrl', [
                     });
                 }else{ console.log("Assignment Delete Failure"); }
             });
+        };
+
+        $scope.showChangeAssignmentGradeInput = function(assignment_id, points_possible){
+            $scope.changingGrade = true;
+            $scope.changePointsPossible = points_possible;
+            $scope.assignmentToChange = assignment_id;
+        };
+
+
+        /*********************************/
+        /*********************************/
+        /****   UPDATE STUDENT GRADE   ***/
+        /*********************************/
+        /*********************************/
+
+
+        $scope.changeAssignmentGrade = function(assignment_id){
+
+            console.log("Assignment To Change: ", $scope.assignmentToChange);
+            // console.log("Old Grade to Change: ", );
+            console.log("New Grade to Change to: ", $scope.new_grade);
+
+            $scope.changingGrade = false;
+
         };
 
 

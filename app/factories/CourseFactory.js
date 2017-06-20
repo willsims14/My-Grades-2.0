@@ -28,6 +28,29 @@ app.factory("CourseFactory", function(apiUrl, RootFactory, $q, $http){
         });
     };
 
+
+    let getCourseGrades = function(){
+        return $q((resolve, reject) => {
+        RootFactory.getApiRoot()
+        .then( (root) => {
+                $http({
+                    url: `http://localhost:8000/student-course-assignments/`,
+                    headers: {
+                        "Content-Type": "application/json",
+                        'Authorization': "Token " + RootFactory.getToken()
+                    }
+                })
+                .then((res) => {
+                    resolve(res);
+                }).catch((error) => {
+                    reject(error);
+                });
+            });
+        });
+    };
+
+
+
     let createCourse = function(course){
         return $q((resolve, reject) => {
             RootFactory.getApiRoot()
@@ -41,7 +64,8 @@ app.factory("CourseFactory", function(apiUrl, RootFactory, $q, $http){
                         "title": course.title,
                         "course_number": course.course_number,
                         "professor": course.professor,
-                        "semester": course.semester
+                        "semester": course.semester,
+                        "description": course.description
                     },
                     headers: {
                         "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
@@ -97,6 +121,7 @@ app.factory("CourseFactory", function(apiUrl, RootFactory, $q, $http){
 
 
 
-    return { getCourse, deleteCourse, createCourse, getSemesters };
+
+    return { getCourse, deleteCourse, createCourse, getSemesters, getCourseGrades };
 
 });
