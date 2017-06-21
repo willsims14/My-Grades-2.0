@@ -43,15 +43,12 @@ angular.module('MyGrades').controller('ProfileCtrl', [
         // Get Student profile
         StudentFactory.getStudent()
         .then( function(response) {
-            console.log("Student-Token Response: ", response);
             $scope.student = response.data;
 
             // Get student's courses
             StudentFactory.getStudentCourses($scope.student)
             .then( function(res) {
-                console.log("Courses Response: ", res.data.results);
                 $scope.student.courses = res.data.results;
-
 
                 CourseFactory.getSemesters()
                 .then( function(response) {
@@ -72,57 +69,39 @@ angular.module('MyGrades').controller('ProfileCtrl', [
                             if(courses[i].assignments === undefined){
                                 courses[i].assignments = [];
                             }
-                            // console.log("Courses[i].assignments: ", courses[i].assignments);
                         }
-                        console.log("STARTING LOOP: ", courses);
                         var numAssignments = 0;
                         var course = {};
                         for(i = 0; i < courses.length; i++){
-                            var z = 0;
-                            // console.log("Courses[i].length: ", courses[i].length);
-                            // console.log("Courses[i].assignments: ", courses[i].assignments);
-                            // console.log("Courses[i].assignments.length: ", courses[i].assignments.length);
-                            numAssignments = courses[i].assignments.length;
-                            course = courses[i];
-                            console.log("Courses[i]: ", course);
-                            console.log("Number of Assignments: ", numAssignments);
-
-
+                            // Temporary Variables for each loop iteration
                             var total_possible = 0.0;
                             var total_received = 0.0;
+                            var z = 0;
+                            numAssignments = courses[i].assignments.length;
+                            course = courses[i];
+
+                            // Loop through each courses assignments
                             while(z < numAssignments){
                                 if(course.assignments[z]){
+                                    // If the course has 1 or more assignments
                                     if(course.assignments[z].points_received !== null){
-                                        // console.log("NOT NULL", course.assignments[z].points_received);
+                                        // Add the assignments point values to respective running sum
                                         total_received += parseFloat(course.assignments[z].points_received);
                                         total_possible += parseFloat(course.assignments[z].points_possible);
-                                        // parseFloat(Math.round(num3 * 100) / 100).toFixed(2);
-                                    }else{ console.log("NULL: ",course.assignments[z].points_received );  }
+                                    }
 
                                 }
-                                z++;
+                                z++; // Increment counter variable
                             }
-                            console.log("PointsPossible: ", total_possible);
-                            console.log("PointsReceived: ", total_received);
-                            if(total_possible === 0){
+                            if(total_possible === 0){ // If total_possible was not added on to
                                 courses[i].current_grade = "No Assignments Yet!";
                             }else{
                                 var current_grade = parseFloat(((total_received / total_possible) * 100.0).toFixed(2));
                                 courses[i].current_grade = current_grade + "%";
-
-                                console.log("CURRENT GRADE: ", courses[i].current_grade);
-                                console.log("-----------------------");
                             }
-
-                            // for(var z = 0; z < courses[i].assignments.length)
-
-
-
                         }
-                        console.log("END LOOP: ", courses);
+                        // Set scope variable
                         $scope.courses = courses;
-
-
                     });
 
                 });
