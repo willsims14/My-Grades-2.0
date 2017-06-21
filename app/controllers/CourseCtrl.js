@@ -40,9 +40,10 @@ angular.module('MyGrades').controller('CourseCtrl', [
                 allTotalPointsPossible += parseFloat($scope.assignments[i].points_possible);
             }
 
-            $scope.totalPointsPossible = totalPointsPossible;
-            $scope.totalPointsReceived = totalPointsReceived;
-            $scope.allTotalPointsPossible = allTotalPointsPossible;
+            // parseFloat(((total_received / total_possible) * 100.0).toFixed(2));
+            $scope.totalPointsPossible = totalPointsPossible.toFixed(2);
+            $scope.totalPointsReceived = totalPointsReceived.toFixed(2);
+            $scope.allTotalPointsPossible = allTotalPointsPossible.toFixed(2);
 
 
 

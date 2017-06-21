@@ -4,12 +4,12 @@
     <ul class="collection with-header col s4" >
         <li class="collection-header"><h4>Assignments</h4></li>
         <li class="collection-item row" ng-repeat="assignment in assignments" >
-            <span class="col s4">(( assignment.title )) </span>
+            <span class="col s4 flow-text">(( assignment.title )) </span>
 
-            <i  class="col s4" >(( assignment.points_received ? assignment.points_received : '*' )) / (( assignment.points_possible ))</i>
+            <i  class="col s4 " >(( assignment.points_received ? assignment.points_received : '*' )) / (( assignment.points_possible ))</i>
 
-            <a class="waves-effect waves-light btn col s2" ng-click="deleteAssignment(assignment.id)">Delete</a>
-            <a class="waves-effect waves-light btn col s2" ng-click="showChangeAssignmentGradeInput(assignment.id, assignment.points_possible)">Change</a>
+            <a class="waves-effect waves-light btn col s2" ng-click="deleteAssignment(assignment.id)"><i class="material-icons dp48">delete</i></a>
+            <a class="waves-effect waves-light btn col s2" ng-click="showChangeAssignmentGradeInput(assignment.id, assignment.points_possible)">Edit Grade</a>
         </li>
 
 
@@ -24,13 +24,12 @@
 
 </div>
 
-<div class="container">
-    <h2 class="row lead center col s12">(( (totalPointsReceived / totalPointsPossible) * 100 ))%</h2>
-    <h3 class="row  center col s12">(( totalPointsReceived )) / (( totalPointsPossible ))</h3>
-    <!-- <h3 class="row  center col s12"><i>(( allTotalPointsPossible ))</i></h3> -->
+<div class="container center">
+    <h2 class="row lead col s12 ">(( ((totalPointsReceived / totalPointsPossible) * 100).toFixed(2) ))%</h2>
+    <h3 class="row col s12 flow-text">(( totalPointsReceived )) / (( totalPointsPossible ))</h3>
+    <a class="waves-effect waves-light btn center" ng-click="deleteCourse(course.id)">Delete This Course</a>
 </div>
 
-<a class="waves-effect waves-light btn center" ng-click="deleteCourse(course.id)"><i class="material-icons dp48">delete</i></a>
 
 
 <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
