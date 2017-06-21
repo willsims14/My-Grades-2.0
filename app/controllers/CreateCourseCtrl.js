@@ -39,10 +39,6 @@ angular.module('MyGrades').controller('CreateCourseCtrl', [
 
        
         $scope.create_course = function(event){
-            console.log("Course Before Assignemnt Submit: ", $scope.course);
-            $scope.course.semester = $scope.selected_semester;
-            console.log("Course After Assignment Submit: ", $scope.course);
-
             CourseFactory.createCourse($scope.course)
             .then( function(response) {
                 if (response.status === 200){
@@ -56,9 +52,8 @@ angular.module('MyGrades').controller('CreateCourseCtrl', [
             });
         };
 
-        $scope.setSemester = function(semester_id){
-            $scope.selected_semester = parseInt(semester_id);
-            console.log("Course After Drop: ", $scope.course);
+        $scope.setSemester = function(semester){
+            $scope.course.semester = semester;
             $('.dropdown-button').dropdown('close');
         };
 

@@ -41,7 +41,18 @@ app.factory("CourseFactory", function(apiUrl, RootFactory, $q, $http){
                     }
                 })
                 .then((res) => {
-                    resolve(res);
+                    console.log("Factory Response: ", res);
+                    var assignments = res.data.results;
+                    var courses = {};
+                    var i;
+
+                    for(i = 0; i < assignments.length; i++){
+                        courses[assignments[i].student_course] = [];
+                    }
+                    for(i = 0; i < assignments.length; i++){
+                        courses[assignments[i].student_course].push(assignments[i]);
+                    }
+                    resolve(courses);
                 }).catch((error) => {
                     reject(error);
                 });
@@ -64,7 +75,7 @@ app.factory("CourseFactory", function(apiUrl, RootFactory, $q, $http){
                         "title": course.title,
                         "course_number": course.course_number,
                         "professor": course.professor,
-                        "semester": course.semester,
+                        "semester": course.semester.id,
                         "description": course.description
                     },
                     headers: {
