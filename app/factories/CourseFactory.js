@@ -10,7 +10,7 @@ app.factory("CourseFactory", function(apiUrl, RootFactory, $q, $http){
         RootFactory.getApiRoot()
         .then( (root) => {
                 $http({
-                    url: `http://localhost:8000/student-course-assignments/`,
+                    url: `http://localhost:8000/student-course-assignments/${course_id}/`,
                     headers: {
                         "Content-Type": "application/json",
                         'Authorization': "Token " + RootFactory.getToken()
