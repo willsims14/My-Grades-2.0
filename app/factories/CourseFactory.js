@@ -42,17 +42,21 @@ app.factory("CourseFactory", function(apiUrl, RootFactory, $q, $http){
                 })
                 .then((res) => {
                     console.log("Factory Response: ", res);
-                    var assignments = res.data.results;
+                    // var assignments = res.data.results;
+                    var assignments = res.data;
                     var courses = {};
                     var i;
-
-                    for(i = 0; i < assignments.length; i++){
-                        courses[assignments[i].student_course] = [];
+                    if(assignments){
+                        for(i = 0; i < assignments.length; i++){
+                            courses[assignments[i].student_course] = [];
+                        }
+                        for(i = 0; i < assignments.length; i++){
+                            courses[assignments[i].student_course].push(assignments[i]);
+                        }
+                        resolve(courses);
+                    }else{
+                        console.log("UH OJ");
                     }
-                    for(i = 0; i < assignments.length; i++){
-                        courses[assignments[i].student_course].push(assignments[i]);
-                    }
-                    resolve(courses);
                 }).catch((error) => {
                     reject(error);
                 });

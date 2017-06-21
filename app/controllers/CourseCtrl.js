@@ -9,7 +9,8 @@ angular.module('MyGrades').controller('CourseCtrl', [
     '$routeParams',
     'CourseFactory',
     'AssignmentFactory',
-    function($scope, $http, $location, RootFactory, apiUrl, $routeParams, CourseFactory, AssignmentFactory) {
+    'AuthFactory',
+    function($scope, $http, $location, RootFactory, apiUrl, $routeParams, CourseFactory, AssignmentFactory, AuthFactory) {
 
         $('.change-grade-inputs').hide();
 
@@ -25,37 +26,47 @@ angular.module('MyGrades').controller('CourseCtrl', [
         $scope.course.title = $routeParams.course_title;
         $scope.course.id = $routeParams.course_id;
 
-        CourseFactory.getCourse($scope.course.id)
-        .then( function(res) {
-            $scope.assignments = res.data.results;
-            console.log("Assignments: ", $scope.assignments);
-            var totalPointsReceived = 0.0;
-            var totalPointsPossible = 0.0;
-            var allTotalPointsPossible = 0.0;
-            for(var i = 0; i < $scope.assignments.length; i++){
-                if ($scope.assignments[i].points_received !== null){
-                    totalPointsReceived += parseFloat($scope.assignments[i].points_received);
-                    totalPointsPossible += parseFloat($scope.assignments[i].points_possible);
+
+
+        $scope.loadCourse = function(){
+
+            CourseFactory.getCourse($scope.course.id)
+            .then( function(res) {
+                console.log("Response: 1", res);
+                // $scope.assignments = res.data.results;
+                $scope.assignments = res.data;
+                console.log("Assignments: ", $scope.assignments);
+                var totalPointsReceived = 0.0;
+                var totalPointsPossible = 0.0;
+                var allTotalPointsPossible = 0.0;
+                for(var i = 0; i < $scope.assignments.length; i++){
+                    if ($scope.assignments[i].points_received !== null){
+                        totalPointsReceived += parseFloat($scope.assignments[i].points_received);
+                        totalPointsPossible += parseFloat($scope.assignments[i].points_possible);
+                    }
+                    allTotalPointsPossible += parseFloat($scope.assignments[i].points_possible);
                 }
-                allTotalPointsPossible += parseFloat($scope.assignments[i].points_possible);
-            }
 
-            // parseFloat(((total_received / total_possible) * 100.0).toFixed(2));
-            $scope.totalPointsPossible = totalPointsPossible.toFixed(2);
-            $scope.totalPointsReceived = totalPointsReceived.toFixed(2);
-            $scope.allTotalPointsPossible = allTotalPointsPossible.toFixed(2);
+                // parseFloat(((total_received / total_possible) * 100.0).toFixed(2));
+                $scope.totalPointsPossible = totalPointsPossible.toFixed(2);
+                $scope.totalPointsReceived = totalPointsReceived.toFixed(2);
+                $scope.allTotalPointsPossible = allTotalPointsPossible.toFixed(2);
+            });
+
+        }
 
 
-
-        });
 
 
 
         $scope.deleteCourse = function(course_id) {
             CourseFactory.deleteCourse(course_id)
             .then( function(res) {
+                console.log("Response:2", res);
                 if(res.status === 204){
                     Materialize.toast('Deleted Course', 5000);
+                    // var user = AuthFactory.getGlobalUser();
+                    $location.path(`/profile/${AuthFactory.getCurrentUser()}`);
                 }else{ console.log("Delete Unsuccesful"); }
             });
         };
@@ -63,11 +74,13 @@ angular.module('MyGrades').controller('CourseCtrl', [
         $scope.deleteAssignment = function(assignment_id) {
             AssignmentFactory.deleteAssignment(assignment_id)
             .then( function(res) {
+                console.log("Resp222", res);
                 if (res.status === 204){
                     Materialize.toast('Deleted Assignment', 5000);
                     CourseFactory.getCourse($scope.course.id)
                     .then( function(res) {
-                        $scope.assignments = res.data.results;
+                        $scope.assignments = res.data;
+                        $scope.loadCourse();
                     });
                 }else{ console.log("Assignment Delete Failure"); }
             });
@@ -97,6 +110,8 @@ angular.module('MyGrades').controller('CourseCtrl', [
 
         };
 
+
+        $scope.loadCourse();
 
 
 }]);
