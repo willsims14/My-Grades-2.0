@@ -49,4 +49,9 @@ app.factory("StudentFactory", function(apiUrl, RootFactory, $q, $http){
 
     return { getStudent, getStudentCourses };
 
+
+    // url(r'^student/detail/', views.StudentDetailViewSet.as_view()),
+    // url(r'^getstudent/(?P<token>\w+)/', views.GetStudentByTokenView.as_view()),
+
+
 });

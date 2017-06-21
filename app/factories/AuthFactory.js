@@ -2,9 +2,18 @@
 
 
 app.factory("AuthFactory", function(apiUrl, RootFactory, $q, $http){
+    var global_user = {};
 
+    let setCurrentUser = function(user){
+        global_user = user;
+    }
+
+    let getCurrentUser = function(){
+        return global_user;
+    }
 
     let registerUser = function(new_user){
+        setCurrentUser(new_user)
         return $q((resolve, reject) => {
             $http({
                 url: `${apiUrl}/register`,
@@ -34,6 +43,7 @@ app.factory("AuthFactory", function(apiUrl, RootFactory, $q, $http){
     };
 
     let loginUser = function(user){
+        setCurrentUser(user);
         return $q((resolve, reject) => {
             $http({
                 url: `${apiUrl}/api-token-auth/`,
@@ -52,6 +62,6 @@ app.factory("AuthFactory", function(apiUrl, RootFactory, $q, $http){
     };
 
 
-    return {registerUser, loginUser};
+    return {registerUser, loginUser, getCurrentUser};
 
 });

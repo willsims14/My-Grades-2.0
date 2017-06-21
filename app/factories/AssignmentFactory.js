@@ -13,7 +13,7 @@ app.factory("AssignmentFactory", function(apiUrl, RootFactory, $q, $http){
                 console.log("Root: ", root);
 
                 $http({
-                    url: `${apiUrl}/create-assignment/${assignment.course}/`,
+                    url: `${apiUrl}/assignment/new/${assignment.course}/`,
                     method: "POST",
                     data: { 
                         "title": assignment.title,
@@ -40,7 +40,7 @@ app.factory("AssignmentFactory", function(apiUrl, RootFactory, $q, $http){
             RootFactory.getApiRoot()
             .then( (root) => {
                 $http({
-                    url: `http://localhost:8000/student-assignment-delete/${assignment_id}/`,
+                    url: `http://localhost:8000/assignment/delete/${assignment_id}/`,
                     method: 'DELETE',
                     headers: {
                         "Content-Type": "application/json",
@@ -63,3 +63,6 @@ app.factory("AssignmentFactory", function(apiUrl, RootFactory, $q, $http){
     return { createAssignment, deleteAssignment };
 
 });
+
+    // url(r'^student/detail/', views.StudentDetailViewSet.as_view()),
+    // url(r'^getstudent/(?P<token>\w+)/', views.GetStudentByTokenView.as_view()),
