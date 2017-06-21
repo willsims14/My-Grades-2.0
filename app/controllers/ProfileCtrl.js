@@ -56,8 +56,6 @@ angular.module('MyGrades').controller('ProfileCtrl', [
 
                     CourseFactory.getCourseGrades()
                     .then( function(response3) {
-                        // console.log("Response3: ", response3);
-                        // console.log("Student Courses: ", $scope.student.courses);
                         var assignmentsByCourse = response3;
                         var courses = $scope.student.courses;
                         var course_id;
