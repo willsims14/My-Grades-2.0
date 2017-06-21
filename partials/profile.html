@@ -1,28 +1,32 @@
-<h1>Profile</h1>
 
-<h3>(( student.first_name )) (( student.last_name ))</h3>
+<div class="container center">
+    <h2 class="lead">Profile</h2>
+    <h3 class="lead">(( student.first_name )) (( student.last_name ))</h3>
+    <a class='dropdown-button btn ' data-beloworigin="true"  data-activates='dropdown6'>Filter By Semester</a>
+    <ul id='dropdown6' class='dropdown-content'>
+        <li ng-repeat="semester in semesters" style="text-align: center" value="(( semester.id ))" ng-click="setSemesterFilter(semester.id)"><a>(( semester.season )) (( semester.year ))</a></li>
+    </ul>
+</div>
 
- <a class='dropdown-button btn' data-beloworigin="true"  data-activates='dropdown6'>Drop Me!</a>
-  <ul id='dropdown6' class='dropdown-content'>
-    <li ng-repeat="semester in semesters" style="text-align: center" value="(( semester.id ))" ng-click="setSemesterFilter(semester.id)"><a>(( semester.season )) (( semester.year ))</a></li>
-  </ul>
-
-<!-- <ul class="collection" ng-repeat='course in student.courses | filter: { semester: semester_filter }'>
-
-    <li class="collection-item"><a href="#!/course/((course.id))/((course.course))">((course.course))</a></li>
-</ul>
- -->
-
+<div class="container row">
   <ul class="collapsible" data-collapsible="expandable" >
     <li  ng-repeat='course in student.courses | filter: { semester: semester_filter }'>
-        <div class="collapsible-header" ><i class="material-icons">filter_drama</i>(( course.course ))</div>
+        <div class="collapsible-header flow-text" ><i class="material-icons">filter_drama</i>(( course.course ))</div>
         <div class="collapsible-body">
-        <span>Description: (( course.description ))</span>
+        <span class="flow-text">Description: (( course.description ))</span>
         <br>
-        <!-- <span >(( getCourseGrades(course.id) ))</span> -->
+        <span class="flow-text">Current Grade: <strong>(( course.current_grade ))</strong></span>
         <br>
         <span><a class="btn btn-sm waves-effect waves-light" href="#!/course/((course.id))/((course.course))">Details</a></span>
         </div>
     </li>
 
   </ul>
+</div>
+
+
+<div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+          <a class="btn-floating btn-large red" ng-href="#!/course/create">
+            <i class="material-icons">add</i>
+          </a>
+</div>
