@@ -6,14 +6,14 @@ app.factory("AuthFactory", function(apiUrl, RootFactory, $q, $http){
 
     let setCurrentUser = function(user){
         global_user = user;
-    }
+    };
 
     let getCurrentUser = function(){
         return global_user;
-    }
+    };
 
     let registerUser = function(new_user){
-        setCurrentUser(new_user)
+        setCurrentUser(new_user);
         return $q((resolve, reject) => {
             $http({
                 url: `${apiUrl}/register`,
