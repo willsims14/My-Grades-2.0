@@ -31,7 +31,7 @@ angular.module('MyGrades').controller('AuthCtrl', [
         };
 
         $scope.quick_login = function(){
-            $scope.user = { username: "will", password: "sims" };
+            $scope.user = { username: "will2", password: "sims" };
             GLOBAL_USER = $scope.user;
             $scope.login();
         };

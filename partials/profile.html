@@ -4,7 +4,7 @@
     <h3 class="lead">(( student.first_name )) (( student.last_name ))</h3>
     <a class='dropdown-button btn ' data-beloworigin="true"  data-activates='dropdown6'>Filter By Semester</a>
     <ul id='dropdown6' class='dropdown-content'>
-        <li ng-repeat="semester in semesters" style="text-align: center" value="(( semester.id ))" ng-click="setSemesterFilter(semester.id)"><a>(( semester.season )) (( semester.year ))</a></li>
+        <li ng-repeat="semester in semesters" style="text-align: center" value="(( semester.id ))" ng-click="setSemesterFilter(semester)"><a>(( semester.season )) (( semester.year ))</a></li>
     </ul>
 </div>
 
