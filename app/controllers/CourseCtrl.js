@@ -53,7 +53,7 @@ angular.module('MyGrades').controller('CourseCtrl', [
                 $scope.allTotalPointsPossible = allTotalPointsPossible.toFixed(2);
             });
 
-        }
+        };
 
 
 
