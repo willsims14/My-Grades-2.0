@@ -25,6 +25,7 @@ angular.module('MyGrades').controller('CreateCourseCtrl', [
         });
 
         $scope.course = {};
+        $scope.semester_selected = false;
 
 
         CourseFactory.getSemesters()
@@ -53,6 +54,7 @@ angular.module('MyGrades').controller('CreateCourseCtrl', [
         };
 
         $scope.setSemester = function(semester){
+            $scope.semester_selected = true;
             $scope.course.semester = semester;
             $('.dropdown-button').dropdown('close');
         };

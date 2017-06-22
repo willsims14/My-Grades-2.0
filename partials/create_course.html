@@ -1,41 +1,47 @@
 <h1>Create a Course</h1>
 
 <div class="container">
-<form class="col s12">
-    <div>
-        <label for="first_name">Title</label>
-        <input id="course_title" type="text" placeholder="Math" ng-model="course.title" class="validate">
-    </div>
+    <form class="col s12">
 
-    <div>
-        <label for="course_description">Description</label>
-        <input id="course_description" type="text" placeholder="Standard math class with weekly homework . . ." ng-model="course.description" class="validate">
-    </div>
+        <div class="col s12">
+            <label for="first_name">Title</label>
+            <input id="course_title" type="text" placeholder="Math" ng-model="course.title" class="validate">
+        </div>
 
-    <div>
-        <label for="course_number">Course Number</label>
-        <input id="course_number" type="text" placeholder="MATH 123" ng-model="course.course_number" class="validate">
-    </div>
+        <div class="col s12">
+            <label for="course_description">Description</label>
+            <input id="course_description" type="text" placeholder="Standard math class with weekly homework . . ." ng-model="course.description" class="validate">
+        </div>
 
-    <div>
-        <label for="professor">Professor</label>
-        <input id="professor" type="text" placeholder="Dr. Hollander" ng-model="course.professor" class="validate">
-    </div>
+        <div class="row">
+            <div class="col s6">
+                <label for="course_number">Course Number</label>
+                <input id="course_number" type="text" placeholder="MATH 123" ng-model="course.course_number" class="validate">
+            </div>
 
-    <div>
-    <label for="semester">Semester:</label>
-    <p id="semester">(( course.semester.season )) - (( course.semester.year ))</p>
-    </div>
-
-    <div class="row center">
-        <a class='dropdown-button btn input-field' data-beloworigin="true"  data-activates='dropdown5'>Drop Me!</a>
-        <ul id='dropdown5' class='dropdown-content'>
-            <li ng-repeat="semester in semesters" style="text-align: center" value="(( semester.id ))" ng-click="setSemester(semester)"><a>(( semester.season )) (( semester.year ))</a></li>
-        </ul>
-    </div>
+            <div class="col s6">
+                <label for="professor">Professor</label>
+                <input id="professor" type="text" placeholder="Dr. Hollander" ng-model="course.professor" class="validate">
+            </div>
+        </div>
 
 
-</form>
+        <div class="row">
+            <div class='col s7'>
+                <label for="semester">Semester:</label>
+                <input id="semester validate" type="text" ng-show="!semester_selected" placeholder="Fall 2017" disabled>
+                <p ng-show="semester_selected" id="semester">(( course.semester.season )) - (( course.semester.year ))</p>
+            </div>
+            <div class="col s5 center">
+                <a class='dropdown-button btn input-field' data-beloworigin="true"  data-activates='dropdown5'>Semesters</a>
+                <ul id='dropdown5' class='dropdown-content'>
+                    <li ng-repeat="semester in semesters" style="text-align: center" value="(( semester.id ))" ng-click="setSemester(semester)"><a>(( semester.season )) (( semester.year ))</a></li>
+                </ul>
+            </div>
+        </div>
+
+
+    </form>
 </div>
 
 

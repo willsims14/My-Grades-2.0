@@ -1,7 +1,5 @@
 "use strict";
 
-var GLOBAL_USER = {};
-
 angular.module('MyGrades').controller('AuthCtrl', [
     '$scope',
     '$http',
@@ -11,33 +9,38 @@ angular.module('MyGrades').controller('AuthCtrl', [
     'AuthFactory',
     function($scope, $http, $location, RootFactory, apiUrl, AuthFactory) {
 
+        // Register new users
+        // ( Creates User instance which signals creation of Student instance )
         $scope.register = function(){
             AuthFactory.registerUser($scope.new_user)
             .then( function(response) {
                 if(response.data.token !== ""){
                     $location.path(`/profile/${$scope.new_user.username}`);
-                }else{ console.log("TOKEN INVALID"); }
+                }
             });
         };
 
+        // Login user
         $scope.login = function(){
             AuthFactory.loginUser($scope.user)
             .then( function(res) {
                 if(res.data.token !== ""){
-                    GLOBAL_USER = $scope.user;
+                    AuthFactory.setCurrentUser($scope.user)
                     $location.path(`/profile/${$scope.user.username}`);
-                }else{ console.log("INVALID TOKEN"); }
+                }
             });
         };
 
         $scope.quick_login = function(){
             $scope.user = { username: "will2", password: "sims" };
-            GLOBAL_USER = $scope.user;
+            AuthFactory.setCurrentUser($scope.user)
             $scope.login();
         };
 
+        // Re-route URL to user profile
         $scope.goToUserProfile = function(){
-            $location.path(`/profile/${GLOBAL_USER.username}`);
+            let CURRENT_USER = AuthFactory.getCurrentUser();
+            $location.path(`/profile/${CURRENT_USER.username}`);
         };
 
 

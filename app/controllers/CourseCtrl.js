@@ -12,6 +12,7 @@ angular.module('MyGrades').controller('CourseCtrl', [
     'AuthFactory',
     function($scope, $http, $location, RootFactory, apiUrl, $routeParams, CourseFactory, AssignmentFactory, AuthFactory) {
 
+        // jQuery for Materialize components
         $('.change-grade-inputs').hide();
 
         $(document).ready(function(){
@@ -21,16 +22,18 @@ angular.module('MyGrades').controller('CourseCtrl', [
 
         });
 
+        // Scope Variables
         $scope.changingGrade = false;
         $scope.course = {};
         $scope.course.title = $routeParams.course_title;
         $scope.course.id = $routeParams.course_id;
 
 
-
+        // Gets authenticated student's courses and assignments 
+        //  and then calculates each course's grade
         $scope.loadCourse = function(){
 
-            CourseFactory.getCourse($scope.course.id)
+            CourseFactory.getCourseAssignments($scope.course.id)
             .then( function(res) {
                 console.log("Response: 1", res);
                 // $scope.assignments = res.data.results;
@@ -56,62 +59,45 @@ angular.module('MyGrades').controller('CourseCtrl', [
         };
 
 
-
-
-
+        // Deletes a student's course (and all assignments tied to it)
         $scope.deleteCourse = function(course_id) {
             CourseFactory.deleteCourse(course_id)
             .then( function(res) {
-                console.log("Response:2", res);
                 if(res.status === 204){
                     Materialize.toast('Deleted Course', 5000);
-                    // var user = AuthFactory.getGlobalUser();
                     $location.path(`/profile/${AuthFactory.getCurrentUser()}`);
-                }else{ console.log("Delete Unsuccesful"); }
+                }
             });
         };
 
+        // Deletes a student's assignment
         $scope.deleteAssignment = function(assignment_id) {
             AssignmentFactory.deleteAssignment(assignment_id)
             .then( function(res) {
-                console.log("Resp222", res);
                 if (res.status === 204){
-                    Materialize.toast('Deleted Assignment', 5000);
-                    CourseFactory.getCourse($scope.course.id)
+                    Materialize.toast('Succesfully Deleted Assignment', 5000);
+                    CourseFactory.getCourseAssignments($scope.course.id)
                     .then( function(res) {
                         $scope.assignments = res.data;
                         $scope.loadCourse();
                     });
-                }else{ console.log("Assignment Delete Failure"); }
+                }
             });
         };
 
+        // Activates hidden input box to collect student's new grade for selected assignment
         $scope.showChangeAssignmentGradeInput = function(assignment_id, points_possible){
             $scope.changingGrade = true;
             $scope.changePointsPossible = points_possible;
             $scope.assignmentToChange = assignment_id;
         };
 
-
-        /*********************************/
-        /*********************************/
-        /****   UPDATE STUDENT GRADE   ***/
-        /*********************************/
-        /*********************************/
-
-
+        /* NOT HOOKED UP */
+        // Will eventually make a PATCH request to chosen assignments
         $scope.changeAssignmentGrade = function(assignment_id){
-
-            console.log("Assignment To Change: ", $scope.assignmentToChange);
-            // console.log("Old Grade to Change: ", );
-            console.log("New Grade to Change to: ", $scope.new_grade);
-
             $scope.changingGrade = false;
 
         };
 
-
         $scope.loadCourse();
-
-
 }]);

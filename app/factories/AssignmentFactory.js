@@ -1,11 +1,13 @@
 "use strict";
 
+/*******************************************************************/
+/********************    Assignment Factory     ********************/
+/***    Handles database interactions for Assignment instances   ***/
+/*******************************************************************/
 
 app.factory("AssignmentFactory", function(apiUrl, RootFactory, $q, $http){
 
-
-
-
+    // Creates new Assignment and StudentCourseAssignment instance in DB
     let createAssignment = function(assignment){
         return $q((resolve, reject) => {
             RootFactory.getApiRoot()
@@ -13,7 +15,7 @@ app.factory("AssignmentFactory", function(apiUrl, RootFactory, $q, $http){
                 console.log("Root: ", root);
 
                 $http({
-                    url: `${apiUrl}/assignment/new/${assignment.course}/`,
+                    url: `${apiUrl}/assignment/create/${assignment.course}/`,
                     method: "POST",
                     data: { 
                         "title": assignment.title,
@@ -35,6 +37,7 @@ app.factory("AssignmentFactory", function(apiUrl, RootFactory, $q, $http){
         });
     };
 
+    // Deletes specified StudentCourseAssignment and Assignment instances
     let deleteAssignment = function(assignment_id){
         return $q((resolve, reject) => {
             RootFactory.getApiRoot()
@@ -58,11 +61,6 @@ app.factory("AssignmentFactory", function(apiUrl, RootFactory, $q, $http){
         });
     };
 
-
-
     return { createAssignment, deleteAssignment };
 
 });
-
-    // url(r'^student/detail/', views.StudentDetailViewSet.as_view()),
-    // url(r'^getstudent/(?P<token>\w+)/', views.GetStudentByTokenView.as_view()),

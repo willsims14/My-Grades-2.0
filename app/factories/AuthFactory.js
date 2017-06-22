@@ -1,17 +1,25 @@
 "use strict";
 
+/******************************************************************/
+/***********************    Auth Factory     **********************/
+/***   Handles database interactions for user authentication    ***/
+/******************************************************************/
 
 app.factory("AuthFactory", function(apiUrl, RootFactory, $q, $http){
-    var global_user = {};
+    // User variable temporarily stored on login
+    var current_user = {};
 
+    // Sets the current user variable
     let setCurrentUser = function(user){
-        global_user = user;
+        current_user = user;
     };
 
+    // Gets the current user variable
     let getCurrentUser = function(){
-        return global_user;
+        return current_user;
     };
 
+    // Makes call to db to register new users
     let registerUser = function(new_user){
         setCurrentUser(new_user);
         return $q((resolve, reject) => {
@@ -42,6 +50,7 @@ app.factory("AuthFactory", function(apiUrl, RootFactory, $q, $http){
         });
     };
 
+    // Makes call to db to login user
     let loginUser = function(user){
         setCurrentUser(user);
         return $q((resolve, reject) => {
@@ -61,7 +70,6 @@ app.factory("AuthFactory", function(apiUrl, RootFactory, $q, $http){
         });
     };
 
-
-    return {registerUser, loginUser, getCurrentUser};
+    return {registerUser, loginUser, getCurrentUser, setCurrentUser};
 
 });
