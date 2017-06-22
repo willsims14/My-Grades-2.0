@@ -1,8 +1,13 @@
 "use strict";
 
+/****************************************************************/
+/*********************    Student Factory     *******************/
+/***   Handles database interactions for Student instances    ***/
+/****************************************************************/
+
 app.factory("StudentFactory", function(apiUrl, RootFactory, $q, $http){
 
-
+    // Uses current Token to retrieve Student information (called after login)
     let getStudent = function(){
         return $q((resolve, reject) => {
             $http({
@@ -21,11 +26,11 @@ app.factory("StudentFactory", function(apiUrl, RootFactory, $q, $http){
         });
     };
 
+    // Get all StudentCourse instances for authenticated Student
     let getStudentCourses = function(student){
         return $q((resolve, reject) => {
-
             $http({
-                url: `http://localhost:8000/student-course/${parseFloat(student.id)}/`,
+                url: `http://localhost:8000/course/get/${parseFloat(student.id)}/`,
                 headers: {
                     "Content-Type": "application/json",
                     'Authorization': "Token " + RootFactory.getToken()
@@ -39,6 +44,6 @@ app.factory("StudentFactory", function(apiUrl, RootFactory, $q, $http){
         });
     };
 
-
     return { getStudent, getStudentCourses };
+    
 });

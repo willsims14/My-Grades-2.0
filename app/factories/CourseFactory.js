@@ -1,16 +1,20 @@
 "use strict";
 
+/*****************************************************/
+/***************    Course Factory     ***************/
+/***   Handles database interactions for courses   ***/
+/*****************************************************/
 
 
 app.factory("CourseFactory", function(apiUrl, RootFactory, $q, $http){
 
-
-    let getCourse = function(course_id){
+    //  Gets the specigied Course's StudentCourseAssignment instances
+    let getCourseAssignments = function(course_id){
         return $q((resolve, reject) => {
         RootFactory.getApiRoot()
         .then( (root) => {
                 $http({
-                    url: `http://localhost:8000/student-course-assignments/${course_id}/`,
+                    url: `http://localhost:8000/course/${course_id}/assignments/`,
                     headers: {
                         "Content-Type": "application/json",
                         'Authorization': "Token " + RootFactory.getToken()
@@ -28,13 +32,13 @@ app.factory("CourseFactory", function(apiUrl, RootFactory, $q, $http){
         });
     };
 
-
+    // Gets all StudentCourseAssignment instances for the authenticated student
     let getCourseGrades = function(){
         return $q((resolve, reject) => {
         RootFactory.getApiRoot()
         .then( (root) => {
                 $http({
-                    url: `http://localhost:8000/student-course-assignments/`,
+                    url: `http://localhost:8000/course-assignments/`,
                     headers: {
                         "Content-Type": "application/json",
                         'Authorization': "Token " + RootFactory.getToken()
@@ -64,8 +68,7 @@ app.factory("CourseFactory", function(apiUrl, RootFactory, $q, $http){
         });
     };
 
-
-
+    // Create a new Course and StudentCourse instances
     let createCourse = function(course){
         return $q((resolve, reject) => {
             RootFactory.getApiRoot()
@@ -73,7 +76,7 @@ app.factory("CourseFactory", function(apiUrl, RootFactory, $q, $http){
                 console.log("Root: ", root);
 
                 $http({
-                    url: `${apiUrl}/create-course/`,
+                    url: `${apiUrl}/course/create/`,
                     method: "POST",
                     data: { 
                         "title": course.title,
@@ -95,12 +98,13 @@ app.factory("CourseFactory", function(apiUrl, RootFactory, $q, $http){
         });
     };
 
+    // Deletes the specified Course and StudenCourse instances 
     let deleteCourse = function(course_id){
         return $q((resolve, reject) => {
             RootFactory.getApiRoot()
             .then( (root) => {
                 $http({
-                    url: `http://localhost:8000/student-course-delete/${course_id}/`,
+                    url: `http://localhost:8000/course/delete/${course_id}/`,
                     method: 'DELETE',
                     headers: {
                         "Content-Type": "application/json",
@@ -118,6 +122,7 @@ app.factory("CourseFactory", function(apiUrl, RootFactory, $q, $http){
         });
     };
 
+    //  Gets all Semester instsances
     let getSemesters = function(){
         return $q((resolve, reject) => {
             $http({
@@ -134,9 +139,6 @@ app.factory("CourseFactory", function(apiUrl, RootFactory, $q, $http){
         });
     };
 
-
-
-
-    return { getCourse, deleteCourse, createCourse, getSemesters, getCourseGrades };
+    return { getCourseAssignments, deleteCourse, createCourse, getSemesters, getCourseGrades };
 
 });
