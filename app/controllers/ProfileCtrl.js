@@ -48,16 +48,19 @@ angular.module('MyGrades').controller('ProfileCtrl', [
             // Get student's courses
             StudentFactory.getStudentCourses($scope.student)
             .then( function(res) {
-                $scope.student.courses = res.data.results;
+                $scope.student.courses = res.data;
 
                 CourseFactory.getSemesters()
                 .then( function(response) {
+                    console.log("RESPONSE: ", response);
                     $scope.semesters = response.data.results;
 
                     CourseFactory.getCourseGrades()
                     .then( function(response3) {
+                        console.log("Response3: ", response3);
                         var assignmentsByCourse = response3;
                         var courses = $scope.student.courses;
+                        console.log("Courses: ", courses);
                         var course_id;
                         var i = 0;
 
@@ -108,7 +111,8 @@ angular.module('MyGrades').controller('ProfileCtrl', [
 
 
         $scope.setSemesterFilter = function(selected_semester){
-            $scope.semester_filter = selected_semester;
+
+            $scope.semester_filter = selected_semester.season;
             console.log("$scope.semester: ", $scope.semester_filter);
 
         };
