@@ -33,7 +33,7 @@ angular.module('MyGrades').controller('AuthCtrl', [
                 .then( function(res) {
                     if(res.data.token !== ""){
                         $scope.invalid_login = false;
-                        AuthFactory.setCurrentUser($scope.user)
+                        AuthFactory.setCurrentUser($scope.user);
                         $location.path(`/profile/${$scope.user.username}`);
                     }
                 });
@@ -50,9 +50,9 @@ angular.module('MyGrades').controller('AuthCtrl', [
 
         // Logs out user
         $scope.logout = function(){
-            $location.path(`/`)
+            $location.path(`/`);
             $route.reload();
-        }
+        };
 
 }]);
 
