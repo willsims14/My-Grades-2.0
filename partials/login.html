@@ -9,6 +9,7 @@
     <div class="row">
         <div class="col s6 section left" ng-show="!is_new_user">
             <h4>Login</h4>
+            <div ng-show="invalid_login"><h5 class="flow-text">Uh Oh! Please enter a valid username and password.</h5></div>
             <div class="row"><input class="input-field col s12" type='text' ng-model="user.username" placeholder="Username"></div>
             <div class="row"><input class="input-field col s12" type='password' ng-model="user.password" placeholder="password"></div>
             <br>
