@@ -7,15 +7,19 @@
 
 <div class="container center">
     <div class="row">
-        <div class="col s6 section left">
+        <div class="col s6 section left" ng-show="!is_new_user">
             <h4>Login</h4>
             <div class="row"><input class="input-field col s12" type='text' ng-model="user.username" placeholder="Username"></div>
             <div class="row"><input class="input-field col s12" type='password' ng-model="user.password" placeholder="password"></div>
             <br>
-
-            <button class="btn waves-effect waves-light center-align" type='submit' ng-click='login()'>Login</button>
+            <div>
+                <button class="btn waves-effect waves-light center-align" type='submit' ng-click='login()' ng-show="!is_new_user">Login</button>
+                <br>
+                <br>
+                <a class="teal-text lighten-2" href="" type='submit' ng-click='is_new_user = true' ng-show="!is_new_user">or Sign Up</a>
+            </div>
         </div>
-        <div class="col s6 section right">
+        <div class="col s6 section right" ng-show="is_new_user">
             <h4>Or Register</h4>
             <div class="row"><input class="input-field col s12" type='text' ng-model="new_user.username" placeholder="Username"></div>
             <div class="row"><input class="input-field col s12" type='password' ng-model="new_user.password" placeholder="Password"></div>
@@ -27,15 +31,10 @@
             </div>
 
             <button class="btn waves-effect waves-light center-align" type='submit' ng-click='register()'>Register</button>
+            <br>
+            <br>
+            <a class="teal-text lighten-2" href="" type='submit' ng-click='is_new_user = false'>or Login</a>
+
         </div>
     </div>
-</div>
-
-
-<div>
-
-<button class="btn waves-effect waves-light" type="submit" ng-click="quick_login()">QUICK
-    <i class="material-icons right">send</i>
-  </button>
-
 </div>
