@@ -12,6 +12,8 @@ angular.module('MyGrades').controller('CourseCtrl', [
     'AuthFactory',
     function($scope, $http, $location, RootFactory, apiUrl, $routeParams, CourseFactory, AssignmentFactory, AuthFactory) {
 
+        $scope.is_loading = true;
+
         // jQuery for Materialize components
         $('.change-grade-inputs').hide();
 
@@ -27,6 +29,7 @@ angular.module('MyGrades').controller('CourseCtrl', [
         $scope.course = {};
         $scope.course.title = $routeParams.course_title;
         $scope.course.id = $routeParams.course_id;
+        $scope.no_assignments = false;
 
 
         // Gets authenticated student's courses and assignments 
@@ -35,25 +38,32 @@ angular.module('MyGrades').controller('CourseCtrl', [
 
             CourseFactory.getCourseAssignments($scope.course.id)
             .then( function(res) {
-                console.log("Response: 1", res);
-                // $scope.assignments = res.data.results;
-                $scope.assignments = res.data;
-                console.log("Assignments: ", $scope.assignments);
-                var totalPointsReceived = 0.0;
-                var totalPointsPossible = 0.0;
-                var allTotalPointsPossible = 0.0;
-                for(var i = 0; i < $scope.assignments.length; i++){
-                    if ($scope.assignments[i].points_received !== null){
-                        totalPointsReceived += parseFloat($scope.assignments[i].points_received);
-                        totalPointsPossible += parseFloat($scope.assignments[i].points_possible);
+                if(!res.data.length){
+                    $scope.no_assignments = true;
+                    $scope.is_loading = false;
+                }else{
+                    
+                    // $scope.assignments = res.data.results;
+                    $scope.assignments = res.data;
+                    console.log("Assignments: ", $scope.assignments);
+                    var totalPointsReceived = 0.0;
+                    var totalPointsPossible = 0.0;
+                    var allTotalPointsPossible = 0.0;
+                    for(var i = 0; i < $scope.assignments.length; i++){
+                        if ($scope.assignments[i].points_received !== null){
+                            totalPointsReceived += parseFloat($scope.assignments[i].points_received);
+                            totalPointsPossible += parseFloat($scope.assignments[i].points_possible);
+                        }
+                        allTotalPointsPossible += parseFloat($scope.assignments[i].points_possible);
                     }
-                    allTotalPointsPossible += parseFloat($scope.assignments[i].points_possible);
-                }
 
-                // parseFloat(((total_received / total_possible) * 100.0).toFixed(2));
-                $scope.totalPointsPossible = totalPointsPossible.toFixed(2);
-                $scope.totalPointsReceived = totalPointsReceived.toFixed(2);
-                $scope.allTotalPointsPossible = allTotalPointsPossible.toFixed(2);
+                    // parseFloat(((total_received / total_possible) * 100.0).toFixed(2));
+                    $scope.totalPointsPossible = totalPointsPossible.toFixed(2);
+                    $scope.totalPointsReceived = totalPointsReceived.toFixed(2);
+                    $scope.allTotalPointsPossible = allTotalPointsPossible.toFixed(2);
+
+                    $scope.is_loading = false;
+                }
             });
 
         };
@@ -92,7 +102,6 @@ angular.module('MyGrades').controller('CourseCtrl', [
             $scope.assignmentToChange = assignment_id;
         };
 
-        /* NOT HOOKED UP */
         // Will eventually make a PATCH request to chosen assignments
         $scope.changeAssignmentGrade = function(assignment_id){
             $scope.changingGrade = false;

@@ -7,7 +7,13 @@ angular.module('MyGrades').controller('AuthCtrl', [
     'RootFactory',
     'apiUrl',
     'AuthFactory',
-    function($scope, $http, $location, RootFactory, apiUrl, AuthFactory) {
+    '$route',
+    function($scope, $http, $location, RootFactory, apiUrl, AuthFactory, $route) {
+
+        $scope.is_new_user = false;
+        $scope.invalid_login = false;
+
+        $scope.user = {};
 
         // Register new users
         // ( Creates User instance which signals creation of Student instance )
@@ -22,19 +28,18 @@ angular.module('MyGrades').controller('AuthCtrl', [
 
         // Login user
         $scope.login = function(){
-            AuthFactory.loginUser($scope.user)
-            .then( function(res) {
-                if(res.data.token !== ""){
-                    AuthFactory.setCurrentUser($scope.user)
-                    $location.path(`/profile/${$scope.user.username}`);
-                }
-            });
-        };
-
-        $scope.quick_login = function(){
-            $scope.user = { username: "will2", password: "sims" };
-            AuthFactory.setCurrentUser($scope.user)
-            $scope.login();
+            if($scope.user.username && $scope.user.password){
+                AuthFactory.loginUser($scope.user)
+                .then( function(res) {
+                    if(res.data.token !== ""){
+                        $scope.invalid_login = false;
+                        AuthFactory.setCurrentUser($scope.user)
+                        $location.path(`/profile/${$scope.user.username}`);
+                    }
+                });
+            }else{
+                $scope.invalid_login = true;
+            }
         };
 
         // Re-route URL to user profile
@@ -43,6 +48,11 @@ angular.module('MyGrades').controller('AuthCtrl', [
             $location.path(`/profile/${CURRENT_USER.username}`);
         };
 
+        // Logs out user
+        $scope.logout = function(){
+            $location.path(`/`)
+            $route.reload();
+        }
 
 }]);
 
